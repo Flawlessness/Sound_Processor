@@ -6,20 +6,11 @@ void MixConverter::run_converter(int16_t *block, size_t block_size, size_t block
 {
     int16_t *mix_block = new int16_t[block_size];
     size_t mix_size = mixing_stream.read(mix_block, block_size);
-    if ((block_start >= end_pos && 0 != end_pos) || block_start + block_size < start_pos)
+    if ((block_start > end_pos && 0 != end_pos) || block_start + block_size <= start_pos)
     {
         return;
     }
-    size_t i;
-    if (start_pos < block_start)
-    {
-        i = 0;
-    }
-    else
-    {
-        i = start_pos - block_start;
-    }
-    while (i < block_size && (i < end_pos - block_start || end_pos == 0))
+    for (size_t i = 0; i < block_size; i++)
     {
         int16_t avg = block[i];
         if (i < mix_size)
