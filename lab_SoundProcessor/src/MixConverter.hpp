@@ -6,9 +6,9 @@
 class MixConverter : public Converter
 {
 public:
-    MixConverter(const iSampleStream &mixing, size_t s = 0, size_t e = 0) : start_pos(s), end_pos(e), mixing_stream(mixing) {};
+    explicit MixConverter(const iSampleStream &mixing, size_t s = 0, size_t e = 0) : start_pos(s), end_pos(e), mixing_stream(mixing) {};
 
-    virtual void run_converter(int16_t *, size_t, size_t);
+    void run_converter(int16_t *, size_t, size_t) override;
 
 private:
     size_t start_pos;
@@ -20,7 +20,7 @@ class MixConverterCreator : public ConverterCreator
 {
     virtual std::shared_ptr<Converter> create_converter(const std::vector<int> &interval_time, const std::vector<std::string> &input_files, const std::vector<size_t> &indexes_processed_file) const;
 
-    virtual const char *name() const;
+    virtual const std::string name() const;
 
-    virtual const char *help() const;
+    virtual const std::string help() const;
 };

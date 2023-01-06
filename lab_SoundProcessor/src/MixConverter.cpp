@@ -50,12 +50,12 @@ std::shared_ptr<Converter> MixConverterCreator::create_converter(const std::vect
     return std::make_shared<MixConverter>(input_stream, static_cast<size_t>(start_pos) * SAMPLE_RATE, static_cast<size_t>(end_pos) * SAMPLE_RATE);
 }
 
-const char *MixConverterCreator::name() const
+const std::string MixConverterCreator::name() const
 {
     return "mix";
 }
 
-const char *MixConverterCreator::help() const
+const std::string MixConverterCreator::help() const
 {
     return "mix converter: "
            "Mixes stream from previous converter and mixes with input stream\n"

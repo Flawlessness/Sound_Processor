@@ -2,55 +2,42 @@
 #include <iostream>
 #include <cstring>
 
-void parse_args(std::string &output_file, std::string &config_file, std::vector<std::string> &input_files, int argc, char *argv[])
+namespace
 {
-    unsigned int argi = 1;
-    enum
-    {
-        FIRST, CONF, OUT, IN
-    } state = FIRST;
-    while (argi < argc)
-    {
-        if (state == FIRST)
-        {
-            if (0 == strcmp("-c", argv[argi]))
-            {
-                config_file = argv[++argi];
-                state = OUT;
-            }
-            else
-            {
+    void parse_args(std::string &output_file, std::string &config_file, std::vector<std::string> &input_files, int argc,
+                    char *argv[]) {
+        unsigned int argi = 1;
+        enum {
+            FIRST, CONF, OUT, IN
+        } state = FIRST;
+        while (argi < argc) {
+            if (state == FIRST) {
+                if (0 == strcmp("-c", argv[argi])) {
+                    config_file = argv[++argi];
+                    state = OUT;
+                } else {
+                    output_file = argv[argi];
+                    state = CONF;
+                }
+            } else if (state == CONF) {
+                if (0 == strcmp("-c", argv[argi])) {
+                    config_file = argv[++argi];
+                    state = IN;
+                } else {
+                    input_files.push_back(argv[argi]);
+                    state = CONF;
+                }
+            } else if (state == OUT) {
                 output_file = argv[argi];
-                state = CONF;
-            }
-        }
-        else if (state == CONF)
-        {
-            if (0 == strcmp("-c", argv[argi]))
-            {
-                config_file = argv[++argi];
+                state = IN;
+            } else if (state == IN) {
+                input_files.push_back(argv[argi]);
                 state = IN;
             }
-            else
-            {
-                input_files.push_back(argv[argi]);
-                state = CONF;
-            }
+            argi++;
         }
-        else if (state == OUT)
-        {
-            output_file = argv[argi];
-            state = IN;
-        }
-        else if (state == IN)
-        {
-            input_files.push_back(argv[argi]);
-            state = IN;
-        }
-        argi++;
     }
 }
-
 
 int start(int argc, char *argv[])
 {

@@ -38,14 +38,14 @@ std::shared_ptr<Converter> MuteConverterCreator::create_converter(const std::vec
     return std::make_shared<MuteConverter>(static_cast<size_t>(start_pos) * SAMPLE_RATE, static_cast<size_t>(end_pos) * SAMPLE_RATE);
 }
 
-const char *MuteConverterCreator::help() const
+const std::string MuteConverterCreator::help() const
 {
     return "mute converter: "
            "Mutes stream from previous converter at interval\n"
            "configuration: mute <start>[=0] <end>[=0]\n";
 }
 
-const char *MuteConverterCreator::name() const
+const std::string MuteConverterCreator::name() const
 {
     return "mute";
 }

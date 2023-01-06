@@ -64,14 +64,14 @@ std::shared_ptr<Converter> VolumeConverterCreator::create_converter(const std::v
     return std::make_shared<VolumeConverter>(static_cast<size_t>(vol), static_cast<size_t>(start_pos) * SAMPLE_RATE, static_cast<size_t>(end_pos) * SAMPLE_RATE);
 }
 
-const char *VolumeConverterCreator::help() const
+const std::string VolumeConverterCreator::help() const
 {
     return "volume converter: "
            "Multiplying samples in interval by a <volume>/100. <volume> also can be more then 100.\n"
            "configuration: vol <volume> <start>[=0] <end>[=0]\n";
 }
 
-const char *VolumeConverterCreator::name() const
+const std::string VolumeConverterCreator::name() const
 {
     return "vol";
 }
